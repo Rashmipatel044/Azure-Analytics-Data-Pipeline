@@ -1,0 +1,68 @@
+{
+  "pipeline_parameters": {
+    "environment": "development",
+    "region": "eastus",
+    "data_retention_days": 90
+  },
+  "azure_settings": {
+    "subscription_id": "${AZURE_SUBSCRIPTION_ID}",
+    "resource_group": "adventure-works-rg",
+    "data_factory_name": "adventure-works-adf",
+    "storage_account": "adventureworksstorage",
+    "key_vault_name": "adventure-works-kv"
+  },
+  "database_parameters": {
+    "sql_server": "adventure-works-sql-server.database.windows.net",
+    "database_name": "staging_adventure_works",
+    "username": "${DB_USERNAME}",
+    "password": "${DB_PASSWORD}",
+    "connection_timeout": 30,
+    "command_timeout": 300
+  },
+  "databricks_parameters": {
+    "workspace_url": "https://adb-<workspace_id>.azuredatabricks.net",
+    "cluster_id": "${CLUSTER_ID}",
+    "instance_pool_id": "${INSTANCE_POOL_ID}",
+    "notebook_path": "/Users/data-engineers/adventure-works",
+    "token": "${DATABRICKS_TOKEN}"
+  },
+  "data_sources": {
+    "github_base_url": "https://raw.githubusercontent.com/anshlamba03/Adventure-Works-Data-Engineering-Project/main/Data",
+    "csv_delimiter": ",",
+    "encoding": "utf-8",
+    "quote_char": "\""
+  },
+  "pipeline_configuration": {
+    "parallel_load_threads": 4,
+    "batch_size": 10000,
+    "retry_attempts": 3,
+    "retry_wait_seconds": 5,
+    "timeout_seconds": 300,
+    "logging_level": "INFO"
+  },
+  "monitoring": {
+    "enable_monitoring": true,
+    "log_analytics_workspace": "adventure-works-logs",
+    "alert_email": "data-team@company.com",
+    "performance_threshold_seconds": 600
+  },
+  "schedules": {
+    "daily_load_time": "02:00",
+    "weekly_full_refresh": "Sunday",
+    "monthly_archive": "01"
+  },
+  "data_validation": {
+    "enable_schema_validation": true,
+    "enable_row_count_validation": true,
+    "enable_null_checks": true,
+    "min_row_threshold": 100,
+    "allowed_null_columns": ["middle_name", "phone_number", "fax_number"]
+  },
+  "transformations": {
+    "enable_data_quality_checks": true,
+    "handle_duplicates": "remove",
+    "null_handling": "fill_with_default",
+    "date_format": "YYYY-MM-DD",
+    "currency_format": "USD"
+  }
+}
